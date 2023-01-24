@@ -250,20 +250,20 @@ install_watchman() {
 }
 
 install_postgresql() {
-    # postgresql-12 (not 11) is in normal repos for 20.04
-    # TODO(ericbrown): We do WANT postgresql-11 - INFRA-5679
+    # postgresql-14 (not 14) is in normal repos for 20.04
+    # TODO(ericbrown): We do WANT postgresql-14 - INFRA-5679
 
     #sudo apt-get remove postgresql-11 postgresql-13 postgresql-client-11 postgresql-client-12 postgresql-client-13
     #sudo apt-get remove postgresql-client-common postgresql-common
 
     # Instructions taken from
     # https://pgdash.io/blog/postgres-11-getting-started.html
-    # Postgres 11 is not available in 18.04, so we need to add the pg apt repository.
+    # Postgres 14 is not available in 18.04, so we need to add the pg apt repository.
     #curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     #sudo add-apt-repository -y "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -c -s`-pgdg main"
     #sudo apt-get update
 
-    POSTGRESQL_VERSION=12
+    POSTGRESQL_VERSION=14
     echo "Installing postgresql-${POSTGRESQL_VERSION}"
     sudo apt-get install -y postgresql-${POSTGRESQL_VERSION} postgresql-contrib libpq-dev
 
