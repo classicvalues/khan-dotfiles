@@ -13,7 +13,7 @@
 # may be useful to use homebrew to install python3 before running python3
 # scripts.
 
-# TODO(ericbrown): Why do we support anything other than postgresql@11 ?
+# TODO(ericbrown): Why do we support anything other than postgresql@14 ?
 # TODO(ericbrown): mac-setup.sh used to tweak icu4c - obsolete now?
 
 import os
@@ -22,15 +22,15 @@ import subprocess
 import time
 
 SCRIPT = os.path.basename(__file__)
-POSTGRES11_FORMULA = 'postgresql@11'
+POSTGRES_FORMULA = 'postgresql@14'
 
 
 def get_brewname():
     """Return the brew formula name currently installed or None."""
-    result = subprocess.run(['brew', 'ls', POSTGRES11_FORMULA],
+    result = subprocess.run(['brew', 'ls', POSTGRES_FORMULA],
                             capture_output=True)
     if result.returncode == 0:
-        return POSTGRES11_FORMULA
+        return POSTGRES_FORMULA
 
     # TODO(ericbrown): Remove when sure this is no longer needed
     # I believe this code is from when postgresql 11 was the current version
@@ -50,8 +50,8 @@ def link_postgres_if_needed(brewname: str, force=False):
     allowing postgresql and commands like psql to be found."""
 
     # TODO(ericbrown): If user has non-brew psql installed in PATH, WARN
-    # TODO(ericbrown): Verify this psql is from brew's postgresql@11
-    # If it is from postgresql@11 then we must either unlink or remove it
+    # TODO(ericbrown): Verify this psql is from brew's postgresql@14
+    # If it is from postgresql@14 then we must either unlink or remove it
     result = subprocess.run(['which', 'psql'], capture_output=True)
     if force or result.returncode != 0:
         print(f'{SCRIPT}: brew link {brewname}')
@@ -105,10 +105,10 @@ def setup_postgres() -> None:
     """Install verson of postgresql we want for mac development with homebrew
     on catalina and later."""
 
-    print(f'{SCRIPT}: Ensuring postgres (usually 11) is installed and running')
+    print(f'{SCRIPT}: Ensuring postgres (usually 14) is installed and running')
     brewname = get_brewname()
     if not brewname:
-        brewname = POSTGRES11_FORMULA
+        brewname = POSTGRES_FORMULA
         install_postgres(brewname)
     else:
         # Sometimes postgresql gets unlinked if dev is tweaking their env
