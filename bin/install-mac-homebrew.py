@@ -73,9 +73,9 @@ class HomebrewInstaller:
     def _validate_and_install_homebrew(self, force_x86=False):
         if platform.uname().machine == "arm64":
             if force_x86:
-                brew_runner = ["/opt/homebrew/bin/brew"]
-            else:
                 brew_runner = ["arch", "-x86_64", "/usr/local/bin/brew"]
+            else:
+                brew_runner = ["/opt/homebrew/bin/brew"]
         else:
             brew_runner = ["/usr/local/bin/brew"]
 
